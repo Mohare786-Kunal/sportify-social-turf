@@ -1,4 +1,7 @@
 
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Futura:wght@400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -17,7 +20,7 @@
     --secondary-foreground: 222.2 47.4% 11.2%;
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 48 100% 67%;  /* TurfYellow */
+    --accent: 142 70% 39%;  /* TurfGreen lighter */
     --accent-foreground: 222.2 47.4% 11.2%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
@@ -31,7 +34,7 @@
     --sidebar-foreground: 222.2 84% 4.9%;
     --sidebar-primary: 142 70% 29%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 48 100% 67%;
+    --sidebar-accent: 142 70% 39%;
     --sidebar-accent-foreground: 222.2 47.4% 11.2%;
     --sidebar-border: 214.3 31.8% 91.4%;
     --sidebar-ring: 142 70% 29%;
@@ -44,7 +47,7 @@
     --card-foreground: 0 0% 100%;
     --popover: 198 7% 13%; /* TurfBlue */
     --popover-foreground: 0 0% 100%;
-    --primary: 51 100% 50%; /* TurfGold */
+    --primary: 142 70% 39%; /* TurfGreen */
     --primary-foreground: 198 7% 13%; /* TurfBlue */
     --secondary: 198 7% 18%;
     --secondary-foreground: 0 0% 100%;
@@ -56,17 +59,17 @@
     --destructive-foreground: 0 0% 100%;
     --border: 198 7% 18%;
     --input: 198 7% 18%;
-    --ring: 51 100% 50%; /* TurfGold */
+    --ring: 142 70% 39%; /* TurfGreen */
     
     /* Sidebar specific variables */
     --sidebar-background: 198 9% 15%;
     --sidebar-foreground: 0 0% 100%;
-    --sidebar-primary: 51 100% 50%;
+    --sidebar-primary: 142 70% 39%;
     --sidebar-primary-foreground: 198 7% 13%;
     --sidebar-accent: 142 70% 29%;
     --sidebar-accent-foreground: 0 0% 100%;
     --sidebar-border: 198 7% 18%;
-    --sidebar-ring: 51 100% 50%;
+    --sidebar-ring: 142 70% 39%;
   }
 }
 
@@ -77,6 +80,11 @@
   }
   body {
     @apply bg-background text-foreground antialiased;
+    font-family: 'Inter', sans-serif;
+  }
+  .font-futura {
+    font-family: 'Futura', 'Inter', sans-serif;
+    letter-spacing: 0.02em;
   }
 }
 
@@ -86,11 +94,11 @@
   }
   
   .text-glow-light {
-    text-shadow: 0 0 10px #FFCA28;
+    text-shadow: 0 0 10px rgba(46, 125, 50, 0.7);
   }
   
   .text-glow-dark {
-    text-shadow: 0 0 10px #FFD700;
+    text-shadow: 0 0 10px rgba(76, 175, 80, 0.7);
   }
   
   .content-auto {
@@ -107,5 +115,26 @@
     background-image: url('/football-field-night.webp');
     background-size: cover;
     background-position: center;
+  }
+  
+  .dissolve-animation {
+    @apply transition-all duration-500 ease-in-out transform;
+  }
+  
+  .dissolve-animation:hover {
+    @apply opacity-80;
+  }
+  
+  .dissolve-animation:active {
+    @apply opacity-60 scale-95;
+  }
+  
+  .button-glow {
+    box-shadow: 0 0 15px rgba(46, 125, 50, 0.5);
+    transition: all 0.3s ease;
+  }
+  
+  .button-glow:hover {
+    box-shadow: 0 0 25px rgba(46, 125, 50, 0.7);
   }
 }

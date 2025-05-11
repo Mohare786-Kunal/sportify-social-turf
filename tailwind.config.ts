@@ -19,6 +19,10 @@ export default {
 			}
 		},
 		extend: {
+			fontFamily: {
+				sans: ['Inter', 'sans-serif'],
+				futura: ['Futura', 'Inter', 'sans-serif'],
+			},
 			colors: {
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
@@ -75,14 +79,14 @@ export default {
 					dark: '#0D1314',
 				},
 				turfGold: {
-					DEFAULT: '#FFD700',
-					light: '#FFEB3B',
-					dark: '#FFC107',
+					DEFAULT: '#2E7D32', // Changed from yellow to green
+					light: '#4CAF50',
+					dark: '#1B5E20',
 				},
 				turfYellow: {
-					DEFAULT: '#FFCA28',
-					light: '#FFE082',
-					dark: '#FFB300',
+					DEFAULT: '#2E7D32', // Changed from yellow to green
+					light: '#4CAF50',
+					dark: '#1B5E20',
 				},
 				turfGray: {
 					DEFAULT: '#333333',
@@ -135,6 +139,16 @@ export default {
 				'flicker': {
 					'0%, 100%': { opacity: '1' },
 					'50%': { opacity: '0.5' }
+				},
+				'dissolve': {
+					'0%': { opacity: '1' },
+					'50%': { opacity: '0.5' },
+					'100%': { opacity: '1' }
+				},
+				'glow': {
+					'0%': { boxShadow: '0 0 5px rgba(76, 175, 80, 0.3)' },
+					'50%': { boxShadow: '0 0 20px rgba(76, 175, 80, 0.6)' },
+					'100%': { boxShadow: '0 0 5px rgba(76, 175, 80, 0.3)' }
 				}
 			},
 			animation: {
@@ -149,7 +163,9 @@ export default {
 				'zoom-bg': 'zoom-bg 5s ease-out forwards',
 				'flicker': 'flicker 3s ease-in-out',
 				'enter': 'fade-in 0.3s ease-out, scale-in 0.2s ease-out',
-				'exit': 'fade-out 0.3s ease-out, scale-out 0.2s ease-out'
+				'exit': 'fade-out 0.3s ease-out, scale-out 0.2s ease-out',
+				'dissolve': 'dissolve 1s ease-in-out infinite',
+				'glow': 'glow 2s ease-in-out infinite'
 			}
 		}
 	},

@@ -3,7 +3,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import Layout from "./components/Layout";
 import Index from "./pages/Index";
@@ -20,6 +20,8 @@ import BookingDetail from "./pages/owner/BookingDetail";
 import AddSport from "./pages/owner/AddSport";
 import SetSportPricing from "./pages/owner/SetSportPricing";
 import TurfTimeSlots from "./pages/owner/TurfTimeSlots";
+import MyBookings from "./pages/user/MyBookings";
+import OwnerLayout from "./components/OwnerLayout";
 
 const queryClient = new QueryClient();
 
@@ -29,27 +31,35 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <Layout>
-          <AnimatePresence mode="wait">
-            <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/turfs" element={<Turfs />} />
-              <Route path="/turfs/:id" element={<TurfDetail />} />
-              <Route path="/community" element={<Community />} />
-              <Route path="/auth" element={<Auth />} />
-              <Route path="/owner/dashboard" element={<OwnerDashboard />} />
-              <Route path="/owner/turfs" element={<OwnerTurfs />} />
-              <Route path="/owner/bookings" element={<OwnerBookings />} />
-              <Route path="/owner/bookings/:id" element={<BookingDetail />} />
-              <Route path="/owner/sports" element={<OwnerSports />} />
-              <Route path="/owner/sports/add" element={<AddSport />} />
-              <Route path="/owner/sports/pricing/:id" element={<SetSportPricing />} />
-              <Route path="/owner/timeslots" element={<TurfTimeSlots />} />
-              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </AnimatePresence>
-        </Layout>
+        <AnimatePresence mode="wait">
+          <Routes>
+            {/* User/Customer Routes */}
+            <Route path="/" element={<Layout />}>
+              <Route index element={<Index />} />
+              <Route path="turfs" element={<Turfs />} />
+              <Route path="turfs/:id" element={<TurfDetail />} />
+              <Route path="community" element={<Community />} />
+              <Route path="my-bookings" element={<MyBookings />} />
+              <Route path="auth" element={<Auth />} />
+            </Route>
+
+            {/* Owner Routes */}
+            <Route path="/owner" element={<OwnerLayout />}>
+              <Route index element={<Navigate to="/owner/dashboard" replace />} />
+              <Route path="dashboard" element={<OwnerDashboard />} />
+              <Route path="turf" element={<OwnerTurfs />} />
+              <Route path="bookings" element={<OwnerBookings />} />
+              <Route path="bookings/:id" element={<BookingDetail />} />
+              <Route path="sports" element={<OwnerSports />} />
+              <Route path="sports/add" element={<AddSport />} />
+              <Route path="sports/pricing/:id" element={<SetSportPricing />} />
+              <Route path="timeslots" element={<TurfTimeSlots />} />
+            </Route>
+
+            {/* Catch-all route */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </AnimatePresence>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
