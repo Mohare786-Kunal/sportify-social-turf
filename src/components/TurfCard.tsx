@@ -39,7 +39,7 @@ export default function TurfCard({
       <div className="relative h-48">
         <img src={imageUrl} alt={`${name} turf`} className="w-full h-full object-cover" loading="lazy" />
       </div>
-      <div className=" px-4 glass">
+      <div className="py-10 px-4 glass">
         <h3 className="text-xl font-bold dark:text-white text-turfGreen mb-2">{name}</h3>
         <div className="flex items-center text-sm mb-2">
           <MapPin className="h-4 w-4 mr-1 flex-shrink-0" />
