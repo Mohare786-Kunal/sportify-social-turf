@@ -19,6 +19,7 @@ import OwnerSports from "./pages/owner/OwnerSports";
 import BookingDetail from "./pages/owner/BookingDetail";
 import AddSport from "./pages/owner/AddSport";
 import SetSportPricing from "./pages/owner/SetSportPricing";
+import TurfTimeSlots from "./pages/owner/TurfTimeSlots";
 
 const queryClient = new QueryClient();
 
@@ -43,6 +44,7 @@ const App = () => (
               <Route path="/owner/sports" element={<OwnerSports />} />
               <Route path="/owner/sports/add" element={<AddSport />} />
               <Route path="/owner/sports/pricing/:id" element={<SetSportPricing />} />
+              <Route path="/owner/timeslots" element={<TurfTimeSlots />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>

@@ -13,6 +13,7 @@ const Layout = ({ children }: LayoutProps) => {
   const location = useLocation();
   const isHomePage = location.pathname === "/";
   const isOwnerPage = location.pathname.startsWith("/owner");
+  const isTurfDetailPage = location.pathname.startsWith("/turfs/");
 
   if (isOwnerPage) {
     return (
@@ -32,7 +33,9 @@ const Layout = ({ children }: LayoutProps) => {
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
-      <main className={isHomePage ? "" : "flex-grow"}>{children}</main>
+      <main className={`${isHomePage ? "" : "flex-grow"} ${isTurfDetailPage ? "pt-24" : ""}`}>
+        {children}
+      </main>
       {!isHomePage && <Footer />}
     </div>
   );
