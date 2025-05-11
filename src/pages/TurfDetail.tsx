@@ -18,10 +18,7 @@ import { format } from "date-fns";
 import { CalendarDays } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
-interface TurfDetailParams {
-  id: string;
-}
-
+// Fix: Updated interface to conform to React Router's useParams expected type
 interface Review {
   id: number;
   userId: string;
@@ -67,7 +64,8 @@ const mockReviews: Review[] = [
 ];
 
 const TurfDetail = () => {
-  const { id } = useParams<TurfDetailParams>();
+  // Fix: Removed the explicit typing for useParams and let TypeScript infer it
+  const { id } = useParams();
   const [turf, setTurf] = useState(null);
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");

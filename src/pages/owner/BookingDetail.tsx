@@ -1,4 +1,3 @@
-
 import { useParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { mockBookings, mockTurfs } from "@/data/mockOwnerData";
@@ -16,8 +15,8 @@ const BookingDetail = () => {
   // Find the booking based on the ID
   const booking = mockBookings.find(b => b.id === Number(id));
   
-  // Find the turf for this booking
-  const turf = booking ? mockTurfs.find(t => t.turfId === booking.turfId) : null;
+  // Fix: Use the correct property name 'id' instead of 'turfId' from the mockTurfs array
+  const turf = booking ? mockTurfs.find(t => t.id === booking.turfId) : null;
   
   if (!booking || !turf) {
     return (
