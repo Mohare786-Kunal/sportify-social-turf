@@ -1,7 +1,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Edit, Plus, Trash2 } from "lucide-react";
+import { Edit, Plus, Trash2, Clock } from "lucide-react";
 import { mockTurfs } from "@/data/mockOwnerData";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogTrigger } from "@/components/ui/dialog";
@@ -10,50 +10,52 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { toast } from "@/hooks/use-toast";
+import { useNavigate } from "react-router-dom";
 
 const OwnerTurfs = () => {
-  const [selectedTurf, setSelectedTurf] = useState<typeof mockTurfs[0] | null>(null);
+  const navigate = useNavigate();
+  // For an owner with a single turf, we'll use the first turf from mock data
+  const [turf, setTurf] = useState(mockTurfs[0]);
   const [isEditing, setIsEditing] = useState(false);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [turfData, setTurfData] = useState({
-    name: "",
-    address: "",
-    city: "",
-    description: "",
-    basePricePerHour: 0,
-    imageUrls: [""]
+    name: turf.name,
+    address: turf.address,
+    city: turf.city,
+    description: turf.description,
+    basePricePerHour: turf.basePricePerHour,
+    imageUrls: [...turf.imageUrls]
   });
 
-  const handleEditTurf = (turf: typeof mockTurfs[0]) => {
-    setSelectedTurf(turf);
+  const handleEditTurf = () => {
     setTurfData({
       name: turf.name,
       address: turf.address,
       city: turf.city,
       description: turf.description,
       basePricePerHour: turf.basePricePerHour,
-      imageUrls: turf.imageUrls
+      imageUrls: [...turf.imageUrls]
     });
     setIsEditing(true);
   };
 
-  const handleAddNewTurf = () => {
-    setSelectedTurf(null);
-    setTurfData({
+  const handleDeleteTurf = () => {
+    // In a real app, we would call an API to delete the turf
+    toast({
+      title: "Turf deleted",
+      description: "The turf has been deleted successfully.",
+    });
+    setDeleteDialogOpen(false);
+    // Reset to empty turf data
+    setTurf({
+      id: 0,
       name: "",
       address: "",
       city: "",
       description: "",
       basePricePerHour: 0,
-      imageUrls: [""]
-    });
-    setIsEditing(true);
-  };
-
-  const handleDeleteTurf = (turfId: number) => {
-    // In a real app, we would call an API to delete the turf
-    toast({
-      title: "Turf deleted",
-      description: "The turf has been deleted successfully.",
+      imageUrls: [""],
+      ownerId: "owner-123"
     });
   };
 
@@ -85,10 +87,23 @@ const OwnerTurfs = () => {
   const handleSubmit = () => {
     // In a real app, we would call an API to save the turf
     toast({
-      title: selectedTurf ? "Turf updated" : "Turf added",
-      description: selectedTurf ? "The turf has been updated successfully." : "A new turf has been added successfully.",
+      title: "Turf updated",
+      description: "The turf has been updated successfully.",
+    });
+    setTurf({
+      ...turf,
+      name: turfData.name,
+      address: turfData.address,
+      city: turfData.city,
+      description: turfData.description,
+      basePricePerHour: turfData.basePricePerHour,
+      imageUrls: turfData.imageUrls
     });
     setIsEditing(false);
+  };
+
+  const manageTimeSlots = () => {
+    navigate("/owner/timeslots");
   };
 
   return (
@@ -99,16 +114,18 @@ const OwnerTurfs = () => {
       className="space-y-6"
     >
       <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-bold">Manage Turfs</h1>
-        <Button onClick={handleAddNewTurf}>
-          <Plus className="mr-2 h-4 w-4" /> Add New Turf
-        </Button>
+        <h1 className="text-3xl font-bold">Manage Your Turf</h1>
+        {!turf.name && (
+          <Button onClick={() => setIsEditing(true)}>
+            <Plus className="mr-2 h-4 w-4" /> Add Your Turf
+          </Button>
+        )}
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {mockTurfs.map((turf) => (
-          <Card key={turf.id} className="overflow-hidden">
-            <div className="relative h-48">
+      {turf.name ? (
+        <div className="grid grid-cols-1 gap-6">
+          <Card className="overflow-hidden">
+            <div className="relative h-64">
               <img 
                 src={turf.imageUrls[0]} 
                 alt={turf.name} 
@@ -116,29 +133,51 @@ const OwnerTurfs = () => {
               />
             </div>
             <CardHeader>
-              <CardTitle>{turf.name}</CardTitle>
+              <CardTitle className="text-2xl">{turf.name}</CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent className="space-y-4">
               <p className="mb-2"><strong>Address:</strong> {turf.address}, {turf.city}</p>
               <p className="mb-2"><strong>Base Price:</strong> ₹{turf.basePricePerHour}/hour</p>
               <p className="text-muted-foreground">{turf.description}</p>
+              
+              <div className="flex flex-wrap gap-3">
+                {turf.imageUrls.slice(1).map((url, index) => (
+                  <img 
+                    key={index} 
+                    src={url} 
+                    alt={`${turf.name} view ${index + 2}`}
+                    className="w-24 h-24 object-cover rounded-md"
+                  />
+                ))}
+              </div>
             </CardContent>
             <CardFooter className="flex justify-end space-x-2">
-              <Button variant="outline" size="sm" onClick={() => handleDeleteTurf(turf.id)}>
+              <Button variant="outline" size="sm" onClick={() => setDeleteDialogOpen(true)}>
                 <Trash2 className="h-4 w-4 mr-1" /> Delete
               </Button>
-              <Button size="sm" onClick={() => handleEditTurf(turf)}>
+              <Button variant="outline" size="sm" onClick={manageTimeSlots}>
+                <Clock className="h-4 w-4 mr-1" /> Manage Time Slots
+              </Button>
+              <Button size="sm" onClick={handleEditTurf}>
                 <Edit className="h-4 w-4 mr-1" /> Edit
               </Button>
             </CardFooter>
           </Card>
-        ))}
-      </div>
+        </div>
+      ) : (
+        <div className="text-center py-12">
+          <h3 className="text-lg font-medium">No turf added yet</h3>
+          <p className="text-muted-foreground mb-4">Add your turf to start receiving bookings</p>
+          <Button onClick={() => setIsEditing(true)}>
+            <Plus className="mr-2 h-4 w-4" /> Add Your Turf
+          </Button>
+        </div>
+      )}
 
       <Dialog open={isEditing} onOpenChange={(open) => !open && setIsEditing(false)}>
         <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle>{selectedTurf ? "Edit Turf" : "Add New Turf"}</DialogTitle>
+            <DialogTitle>{turf.name ? "Edit Turf" : "Add Your Turf"}</DialogTitle>
           </DialogHeader>
           <div className="grid gap-4 py-4">
             <div className="grid grid-cols-4 items-center gap-4">
@@ -226,6 +265,25 @@ const OwnerTurfs = () => {
           <DialogFooter>
             <Button variant="outline" onClick={() => setIsEditing(false)}>Cancel</Button>
             <Button onClick={handleSubmit}>Save Changes</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Delete Turf</DialogTitle>
+          </DialogHeader>
+          <p>
+            Are you sure you want to delete your turf? This action cannot be undone.
+          </p>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setDeleteDialogOpen(false)}>
+              Cancel
+            </Button>
+            <Button variant="destructive" onClick={handleDeleteTurf}>
+              Delete Turf
+            </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>

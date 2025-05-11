@@ -16,7 +16,7 @@ const OwnerSidebar = () => {
     <Sidebar>
       <SidebarHeader className="flex items-center justify-between px-4">
         <div className="flex items-center">
-          <span className="font-bold text-xl">TurfBook Owner</span>
+          <span className="font-bold text-xl bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">TurfBook Owner</span>
         </div>
         <ThemeSwitcher />
       </SidebarHeader>
@@ -26,21 +26,21 @@ const OwnerSidebar = () => {
             <SidebarMenuButton asChild tooltip="Dashboard">
               <NavLink
                 to="/owner/dashboard"
-                className={({ isActive }) => (isActive ? "bg-sidebar-accent text-sidebar-accent-foreground" : "")}
+                className={({ isActive }) => (isActive ? "bg-primary/10 border-l-4 border-primary text-primary" : "")}
               >
-                <BarChart2 />
+                <BarChart2 className="text-primary" />
                 <span>Dashboard</span>
               </NavLink>
             </SidebarMenuButton>
           </SidebarMenuItem>
           <SidebarMenuItem>
-            <SidebarMenuButton asChild tooltip="Turfs">
+            <SidebarMenuButton asChild tooltip="Turf">
               <NavLink
                 to="/owner/turfs"
-                className={({ isActive }) => (isActive ? "bg-sidebar-accent text-sidebar-accent-foreground" : "")}
+                className={({ isActive }) => (isActive ? "bg-primary/10 border-l-4 border-primary text-primary" : "")}
               >
-                <MapPin />
-                <span>Manage Turfs</span>
+                <MapPin className="text-primary" />
+                <span>Manage Turf</span>
               </NavLink>
             </SidebarMenuButton>
           </SidebarMenuItem>
@@ -48,9 +48,9 @@ const OwnerSidebar = () => {
             <SidebarMenuButton asChild tooltip="Sports">
               <NavLink
                 to="/owner/sports"
-                className={({ isActive }) => (isActive ? "bg-sidebar-accent text-sidebar-accent-foreground" : "")}
+                className={({ isActive }) => (isActive ? "bg-primary/10 border-l-4 border-primary text-primary" : "")}
               >
-                <Edit />
+                <Edit className="text-primary" />
                 <span>Manage Sports</span>
               </NavLink>
             </SidebarMenuButton>
@@ -59,9 +59,9 @@ const OwnerSidebar = () => {
             <SidebarMenuButton asChild tooltip="Bookings">
               <NavLink
                 to="/owner/bookings"
-                className={({ isActive }) => (isActive ? "bg-sidebar-accent text-sidebar-accent-foreground" : "")}
+                className={({ isActive }) => (isActive ? "bg-primary/10 border-l-4 border-primary text-primary" : "")}
               >
-                <Calendar />
+                <Calendar className="text-primary" />
                 <span>Bookings</span>
               </NavLink>
             </SidebarMenuButton>
